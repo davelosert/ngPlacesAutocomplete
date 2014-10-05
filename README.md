@@ -29,7 +29,11 @@ app.js:
 Just use it as a HTML-Attribute on a text-input as you would every other directive:
 
 ```HTML
-<input type="text" ng-places-autocomplete pa-options="optionsObject" pa-on-details-ready="callbackFunction" 
+<input  type="text" 
+        ng-places-autocomplete 
+        pa-options="optionsObject" 
+        pa-on-details-ready="callbackFunction"
+/> 
 ```
 
 ##API
