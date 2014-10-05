@@ -2,6 +2,9 @@ ngPlacesAutocomplete
 ====================
 
 A simple Directive to easily add the autocomplete feature of the Google Places Service to a Textbox. 
+Feel free to contribute or leave an issue here on Github if you are missing functionality or want to report
+a bug.
+
 
 ##How to use
 
@@ -16,14 +19,18 @@ or
 Then refer it inside your index.html, careful to do this **after** the Google-Javascript-API and Angular, but **before** your 
 app.js:
 
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
-    <script src="../bower_components/angular/angular.min.js"></script>
-    <script src="../ngPlacesAutocomplete.min.js"></script>
-    <script src="app.js"></script>
+```HTML
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+<script src="../bower_components/angular/angular.min.js"></script>
+<script src="../ngPlacesAutocomplete.min.js"></script>
+<script src="app.js"></script>
+```
 
 Just use it as a HTML-Attribute on a text-input as you would every other directive:
 
-    <input type="text" ng-places-autocomplete pa-options="optionsObject" pa-on-details-ready="callbackFunction" 
+```HTML
+<input type="text" ng-places-autocomplete pa-options="optionsObject" pa-on-details-ready="callbackFunction" 
+```
 
 ##API
 The directive offers two attributes:
@@ -37,6 +44,7 @@ The given Options-Object is being watched and therefore automatically adjusts to
 
 ##Todos
 * Make free text search for an address available
+* Write some tests
 
 
 ##License
