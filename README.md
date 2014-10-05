@@ -49,6 +49,8 @@ The given Options-Object is being watched and therefore automatically adjusts to
 ##Todos
 * Make free text search for an address available
 * Write some tests
+* Add more examples which actually use options
+* Implement "bind" option for bounds of map
 
 
 ##License
