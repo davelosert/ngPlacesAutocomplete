@@ -1,0 +1,28 @@
+{
+	"name"         : "ngPlacesAutocomplete",
+	"version"      : "1.0.0",
+	"authors"      : [
+		"Dave <david.losert@gmx.de>"
+	],
+	"description"  : "A Directive to easily add the autocomplete feature of the Google Places Service to a textbox.",
+	"main"         : "ngPlacesAutocomplete.min.js",
+	"keywords"     : [
+		"autocomplete",
+		"autocompletion",
+		"google maps",
+		"googlemapsapi",
+		"google places"
+	],
+	"license"      : "MIT",
+	"ignore"       : [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test",
+		"tests",
+		"example"
+	],
+	"dependencies" : {
+		"angular" : "~1.2.26"
+	}
+}

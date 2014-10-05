@@ -1,0 +1,25 @@
+{
+  "name": "ngPlacesAutocomplete",
+  "version": "1.0.0",
+  "description": "A Directive to easily add the autocomplete feature of the Google Places Service to a textbox.",
+  "main": "ngPlacesAutocomplete.js",
+  "directories": {
+    "example": "example",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "author": "David Losert (david.losert@gmx.de)",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "gulp": "^3.8.8",
+    "gulp-angular-injector": "^1.0.0",
+    "gulp-jsmin": "^0.1.4",
+    "gulp-load-plugins": "^0.7.0",
+    "gulp-ngmin": "^0.3.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-uglify": "^1.0.1"
+  }
+}

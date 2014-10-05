@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body ng-app="exampleApp">
+<div ng-controller="exampleController">
+	<input type="text"
+		   ng-places-autocomplete
+		   ng-model="query"
+		   pa-options="paOptions"
+		   pa-on-details-ready="detailsCallback"
+			/>
+
+	<div>
+		<h1>Details: </h1>
+
+		<p>{{paDetails}}</p>
+	</div>
+</div>
+</body>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+<script src="../bower_components/angular/angular.min.js"></script>
+<script src="../ngPlacesAutocomplete.js"></script>
+<script src="app.js"></script>
+</html>
