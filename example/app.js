@@ -7,7 +7,7 @@
 angular.module('exampleApp', ['ngPlacesAutocomplete'])
 .controller('exampleController', function ($scope, $log) {
 		$scope.paDetails = {};
-		$scope.detailsCallback = function (details) {
+		$scope.placesCallback = function (details) {
 			$scope.paDetails = details;
 		};
 	});

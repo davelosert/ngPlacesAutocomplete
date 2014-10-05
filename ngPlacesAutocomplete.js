@@ -11,7 +11,7 @@ angular.module('ngPlacesAutocomplete', [])
 			, optionNameToFunc = {
 				'bounds'                : 'setBounds',
 				'types'                 : 'setTypes',
-				'componentRestrictions' : 'setComponentRestrictions',
+				'componentRestrictions' : 'setComponentRestrictions'
 //				'bindTo'                : 'bindTo'
 			}
 			, defaultOptions = {
@@ -26,12 +26,12 @@ angular.module('ngPlacesAutocomplete', [])
 			restrict : 'EA',
 			scope    : {
 				ngModel          : '=', // Query-Model
-				paOnDetailsReady : '=',  // Callback for ready Details
+				paOnPlaceReady   : '=',  // Callback for ready Details
 				paOptions        : '=?' // Options for autocomplete
 			},
 			link     : function (scope, element, attributes) {
-				if (scope.paOnDetailsReady && typeof scope.paOnDetailsReady !== 'function') {
-					throw new Error(moduleString + 'paOnDetailsReady needs to be a function!');
+				if (!angular.isFunction(scope.paOnPlaceReady)) {
+					throw new Error(moduleString + 'paOnPlaceReady needs to be a function!');
 				}
 
 				// Check if google maps is set
@@ -39,10 +39,18 @@ angular.module('ngPlacesAutocomplete', [])
 					throw new Error(moduleString + 'Google Places Service not found!');
 				}
 
+				// Instantaite the autocompleteion feature on the current element
 				var autocomplete = new google.maps.places.Autocomplete(element[0], {});
 
+				/**
+				 * Function to set Options to the autocomplete-instance.
+				 * It always copies the defaultOptions properties and extends/overwrites this with the options
+				 * given (if any). Then it uses the optionNameToFunc for every option to correctly set the option
+				 * on the autocomplete feature.
+				 */
 				function setOptions() {
 					if (autocomplete) {
+						// Copy the default options and extend the current options.
 						scope.paOptions = angular.extend(angular.copy(defaultOptions), scope.paOptions);
 						angular.forEach(optionNameToFunc, function (funcName, key) {
 							var value = scope.paOptions[key] || undefined;
@@ -58,12 +66,12 @@ angular.module('ngPlacesAutocomplete', [])
 					}
 				}
 
-
+				/**
+				 * On place_changed event
+ 				 */
 				google.maps.event.addListener(autocomplete, 'place_changed', function () {
-					var result = autocomplete.getPlace();
 					scope.$apply(function () {
-						scope.paDetails = result;
-						scope.paOnDetailsReady && scope.paOnDetailsReady(result);
+						scope.paOnPlaceReady(autocomplete.getPlace());
 					});
 				});
 
