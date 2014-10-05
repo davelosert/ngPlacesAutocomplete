@@ -14,7 +14,7 @@ First download the directive, either with `bower` or `npm`:
 
 or 
 
-    bower install ngPlacesAutocomplete --save
+    bower install ng-places-autocomplete --save
 
 Then refer it inside your index.html, careful to do this **after** the Google-Javascript-API and Angular, but **before** your 
 app.js:
