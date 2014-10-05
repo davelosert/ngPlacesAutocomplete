@@ -10,7 +10,7 @@ a bug.
 
 First download the directive, either with `bower` or `npm`:
 
-    npm install ngPlacesAutocomplete --save
+    npm install ng-places-autocomplete --save
 
 or 
 
