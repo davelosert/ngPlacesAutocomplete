@@ -39,8 +39,8 @@ Just use it as a HTML-Attribute on a text-input as you would every other directi
 ##API
 The directive offers two attributes:
 
-**paOnPlaceReady** - Expects a Callback-Function that gets executed everytime a user chose a place from the autocomplete-window. 
-The function get
+**paOnPlaceReady** - Expects a Callback-Function that gets executed everytime a user chose a place from the autocomplete-window. The function
+gets the selected Place-Object as the first and only parameter.
 
 **paOptions** (optional) - The Options Object to configure the autocomplete-service. It takes the exact same values as
 the Google-Places-Service described [here](https://developers.google.com/maps/documentation/javascript/reference#AutocompleteOptions). 
