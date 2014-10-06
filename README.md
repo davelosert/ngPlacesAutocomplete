@@ -5,6 +5,12 @@ A simple Directive to easily add the autocomplete feature of the Google Places S
 Feel free to contribute or leave an issue here on Github if you are missing functionality or want to report
 a bug.
 
+### News
+**06 Nov 2014:**
+As of today, I advanced the directives functionality with text-based search, meaning a user can type in any String now
+and it will get resolved to a Place-Object. I still need to adjust the documentation though. The next step will be to
+write an additional directive with which this text search can be manually triggerd (e.g. on submit of a form or click 
+of a button). 
 
 ##How to use
 
@@ -37,17 +43,17 @@ Just use it as a HTML-Attribute on a text-input as you would every other directi
 ```
 
 ##API
-The directive offers two attributes:
+The directive needs an **ngModel** set and further offers two attributes:
 
-**paOnPlaceReady** - Expects a Callback-Function that gets executed everytime a user chose a place from the autocomplete-window. The function
-gets the selected Place-Object as the first and only parameter.
+**paOnPlaceReady** - Expects a NodeJS-Style Callback-Function that gets executed everytime a user chose a place from the autocomplete-window. The first parameter is either
+an error if one occured or null. The second one is the recieved Places-Object as specified [here](https://developers.google.com/maps/documentation/javascript/reference?hl=FR#PlaceResult).
 
 **paOptions** (optional) - The Options Object to configure the autocomplete-service. It takes the exact same values as
 the Google-Places-Service described [here](https://developers.google.com/maps/documentation/javascript/reference#AutocompleteOptions). 
 The given Options-Object is being watched and therefore automatically adjusts to changes you make.
 
 ##Todos
-* Make free text search for an address available
+* Implement a way to adjust the ngModel after textsearch-execution
 * Write some tests
 * Add more examples which actually use options
 * Implement "bind" option for bounds of map
