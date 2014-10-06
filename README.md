@@ -36,6 +36,7 @@ Just use it as a HTML-Attribute on a text-input as you would every other directi
 
 ```HTML
 <input  type="text" 
+        ng-model="query"
         ng-places-autocomplete 
         pa-options="optionsObject" 
         pa-on-details-ready="callbackFunction"
