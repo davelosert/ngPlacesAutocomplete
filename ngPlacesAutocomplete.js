@@ -54,7 +54,7 @@ angular.module('ngPlacesAutocomplete', [])
 
 					acService.getPlacePredictions(queryObject, function (predictionResults) {
 						if (!predictionResults || predictionResults.length == 0) {
-							return $scope.onDetailsReady(null);
+							return $scope.paOnPlaceReady(null);
 						}
 						placesService.getDetails({placeId : predictionResults[0].place_id}, function (place, status) {
 							if (status == google.maps.places.PlacesServiceStatus.OK
