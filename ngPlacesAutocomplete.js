@@ -23,7 +23,7 @@ angular.module('ngPlacesAutocomplete', [])
 
 
 		return {
-			restrict   : 'EA',
+			restrict   : 'A',
 			scope      : {
 				ngModel        : '=', // Query-Model
 				paOnPlaceReady : '=',  // Callback for ready Details
@@ -45,7 +45,7 @@ angular.module('ngPlacesAutocomplete', [])
 					placesService = new google.maps.places.PlacesService(dummyDiv);
 
 				/**
-				 * Manual search bound to controller so it can get executed by
+				 * Manual search bound to controller so it can get executed
 				 */
 				this.manualSearch = function () {
 					var queryObject = angular.extend({
