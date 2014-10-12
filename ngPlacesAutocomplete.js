@@ -7,7 +7,7 @@
 angular.module('ngPlacesAutocomplete', [])
 	.directive('ngPlacesAutocomplete', function () {
 		var moduleString = '[ngPlacesAutocomplete] - ' // ModuleString is used for Errors for better identification
-			// We dont give the options object but use the functions to be more flexible
+			// Mapping from the actual optins object to the functions to set them on the autocomplete
 			, optionNameToFunc = {
 				'bounds'                : 'setBounds',
 				'types'                 : 'setTypes',
@@ -18,19 +18,23 @@ angular.module('ngPlacesAutocomplete', [])
 				'bounds'                : null,
 				'types'                 : [],
 				'componentRestrictions' : null,
-				'bindTo'                : null
+				'bindTo'                : null,
+				'updateModel'           : false,
+				'watchOptions'          : false
 			};
 
 
 		return {
-			restrict   : 'A',
-			scope      : {
-				ngModel        : '=', // Query-Model
+			restrict : 'A',
+			require  : 'ngModel',
+			scope    : {
 				paOnPlaceReady : '=',  // Callback for ready Details
-				paOptions      : '=?' // Options for autocomplete
+				paOptions      : '=?', // Options for autocomplete
+				paTrigger      : '=?'
 			},
-			controller : function ($scope) {
-				if (!angular.isFunction($scope.paOnPlaceReady)) {
+			link     : function (scope, element, attributes, ngModel) {
+				// Do some dirty checking to inform the user if the setup is wrong
+				if (!angular.isFunction(scope.paOnPlaceReady)) {
 					throw new Error(moduleString + 'paOnPlaceReady needs to be a function!');
 				}
 
@@ -39,49 +43,93 @@ angular.module('ngPlacesAutocomplete', [])
 					throw new Error(moduleString + 'Google Places Service not found!');
 				}
 
-				var acService = new google.maps.places.AutocompleteService(),
-					// we need a dummy div since the placesService needs an HTML Element (usually a map) to be instantiated
-					dummyDiv = angular.element('<div>')[0],
-					placesService = new google.maps.places.PlacesService(dummyDiv);
-
-				/**
-				 * Manual search bound to controller so it can get executed
-				 */
-				this.manualSearch = function () {
-					var queryObject = angular.extend({
-						input : $scope.ngModel
-					}, $scope.paOptions);
-
-					acService.getPlacePredictions(queryObject, function (predictionResults) {
-						if (!predictionResults || predictionResults.length == 0) {
-							return $scope.paOnPlaceReady(null);
-						}
-						placesService.getDetails({placeId : predictionResults[0].place_id}, function (place, status) {
-							if (status == google.maps.places.PlacesServiceStatus.OK
-								|| status == google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-								$scope.paOnPlaceReady(null, place);
-							}
-							else {
-								$scope.paOnPlaceReady(new Error(moduleString + 'Places returned status: "' + status + '"'));
-							}
-							$scope.$apply();
-						});
-					});
-				};
-			},
-			link       : function (scope, element, attributes, controller) {
 				// Instantiate the autocompleteion feature on the current element
-				var autocomplete = new google.maps.places.Autocomplete(element[0], {});
+				var autocomplete = new google.maps.places.Autocomplete(element[0], {}),
+					acService = new google.maps.places.AutocompleteService(), // acService needed to manual search
+					dummyDiv = angular.element('<div>')[0], // we need a dummy div since the placesService needs an HTML Element (usually a map) to be instantiated
+					placesService = new google.maps.places.PlacesService(dummyDiv); // PlacesService needed for detailed search
 
 				/**
-				 * On place_changed event
+				 * On place_changed event either send the result if any, or execute a manual-search
 				 */
 				google.maps.event.addListener(autocomplete, 'place_changed', function () {
-					scope.$apply(function () {
-						var result = autocomplete.getPlace();
-						result.address_components ? scope.paOnPlaceReady(null, result) : controller.manualSearch();
-					});
+					var result = autocomplete.getPlace();
+					if (result.address_components) {
+						scope.$apply(function () {
+							// An empty search just returns an object with on property "name" which contains the used query:
+							// { name: <query> } - so only if there is the address_components field it means we have an actual result
+							if (scope.paOptions.updateModel) {
+								ngModel.$setViewValue(result.formatted_address);
+							}
+							scope.paOnPlaceReady(null, result);
+						});
+					}
+					else {
+						manualSearch();
+					}
 				});
+
+				/**
+				 * The manual search first uses the Autocomplete-Service to get Place-Predictions. We could also use the
+				 * PlacesService.textSearch here, but the problem is that it doesnt support (yet?) the same options as
+				 * autocompletion (especially the componentRestriction to a country). We then take the first prediction
+				 * if any and use the PlacesService to do a detailed search about it.
+				 *
+				 * Credit for this idea actually goes to "wpalahnuk" who did this in his ngAutocomplete-Directive
+				 * (https://github.com/wpalahnuk/ngAutocomplete)
+				 */
+				var manualSearch = function () {
+					if (!ngModel.$viewValue) {
+						scope.paOnPlaceReady(null);
+					}
+					// Create the query object by using the viewValue
+					var queryObject = angular.extend({
+						input : ngModel.$viewValue
+					}, scope.paOptions);
+
+					acService.getPlacePredictions(queryObject, function (predictionResults) {
+						// If there is no result
+						if (!predictionResults || predictionResults.length === 0) {
+							return scope.$apply(function () {
+								scope.paOnPlaceReady(null);
+							});
+						}
+						detailSearch(predictionResults[0].place_id);
+					});
+				};
+
+				/**
+				 * The detailSearch takes a placeId (as specified by the google-places-api) and returns a result-object
+				 * with all the information we need.
+				 * @param placeId
+				 */
+				var detailSearch = function (placeId) {
+					placesService.getDetails({placeId : placeId}, function (place, status) {
+						if (status === google.maps.places.PlacesServiceStatus.OK
+							|| status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
+
+							scope.$apply(function () {
+								if (scope.paOptions.updateModel) {
+									ngModel.$setViewValue(place.formatted_address);
+									ngModel.$render();
+								}
+								scope.paOnPlaceReady(null, place);
+							});
+
+						}
+						else {
+							scope.$apply(function () {
+								scope.paOnPlaceReady(new Error(moduleString + 'Places returned status: "' + status + '"'));
+							});
+						}
+					});
+				};
+
+				// If the paTrigger is set, assign the manual search function to it so the user is able to trigger it wherever he wants
+				if (scope.paTrigger) {
+					scope.paTrigger = manualSearch;
+				}
+
 
 				/**
 				 * Function to set Options to the autocomplete-instance.
@@ -107,9 +155,19 @@ angular.module('ngPlacesAutocomplete', [])
 					}
 				}
 
-				scope.$watch('paOptions', function () {
+				/**
+				 * If no options-object given, use the default options.
+				 * Only put a $watch on the options if the user explicitly wants it. Else, this costs to much ressources
+				 * and is better just done once.
+				 */
+				if (!angular.isObject(scope.paOptions) || !scope.paOptions.watchOptions) {
 					setOptions();
-				}, true);
+				}
+				else {
+					scope.$watch('paOptions', function () {
+						setOptions();
+					}, true);
+				}
 			}
 		};
 	});
