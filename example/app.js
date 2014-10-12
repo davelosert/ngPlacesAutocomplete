@@ -5,10 +5,15 @@
 
 
 angular.module('exampleApp', ['ngPlacesAutocomplete'])
-.controller('exampleController', function ($scope, $log) {
+	.controller('exampleController', function ($scope, $log) {
+		$scope.query = '';
+		$scope.paOptions = {
+			updateModel : true
+		};
+		$scope.paTrigger = {};
 		$scope.paDetails = {};
 		$scope.placesCallback = function (error, details) {
-			if(error){
+			if (error) {
 				return console.error(error);
 			}
 			$scope.paDetails = details;
