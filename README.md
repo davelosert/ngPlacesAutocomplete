@@ -47,7 +47,7 @@ Just use it as a HTML-Attribute on a text-input as you would every other directi
         ng-places-autocomplete 
         pa-options="optionsObject" 
         pa-trigger="triggerFunc"
-        pa-on-details-ready="callbackFunction"
+        pa-on-place-ready="callbackFunction"
 /> 
 ```
 
