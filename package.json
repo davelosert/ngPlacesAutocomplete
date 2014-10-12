@@ -1,5 +1,6 @@
 {
 	"version"         : "1.2.0",
+	"name"            : "ng-places-autocomplete",
 	"description"     : "A Directive to easily add the autocomplete feature of the Google Places Service to a textbox.",
 	"main"            : "ngPlacesAutocomplete.js",
 	"directories"     : {
@@ -10,7 +11,7 @@
 	},
 	"author"          : "David Losert (david.losert@gmx.de)",
 	"license"         : "MIT",
-	"homepage"             : "https://github.com/Charminbear/ngPlacesAutocomplete",
+	"homepage"        : "https://github.com/Charminbear/ngPlacesAutocomplete",
 	"repository"      : {
 		"type" : "git",
 		"url"  : "https://github.com/Charminbear/ngPlacesAutocomplete.git"
