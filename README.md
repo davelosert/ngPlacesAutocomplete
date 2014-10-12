@@ -5,6 +5,8 @@ A simple Directive to easily add the autocomplete feature of the Google Places S
 Feel free to contribute or leave an issue here on Github if you are missing functionality or want to report
 a bug.
 
+####Current Version: 1.2.0
+
 ### News
 **12 Oct 2014:**
 I now implemented a way to synchronize the text-input with the returned result after a search. I made it configurable
@@ -52,7 +54,7 @@ Just use it as a HTML-Attribute on a text-input as you would every other directi
 ```
 
 ##API
-The directive needs an **ngModel** set and further offers two attributes:
+The directive needs an **ngModel** set and further offers three attributes:
 
 **paOnPlaceReady** - Expects a NodeJS-Style Callback-Function that gets executed everytime a user chose a place from the autocomplete-window. The first parameter is either
 an error if one occured or null. The second one is the recieved Places-Object as specified [here](https://developers.google.com/maps/documentation/javascript/reference?hl=FR#PlaceResult).
@@ -70,7 +72,7 @@ typed in query-string to it. You can then easily use the value and put it inside
 
 ##Todos
 * Write some tests
-* Add more examples which actually use options
+* Add more examples which actually used options
 * Implement "bind" option for bounds of map
 
 
