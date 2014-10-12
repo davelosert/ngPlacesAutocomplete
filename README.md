@@ -61,7 +61,7 @@ an error if one occured or null. The second one is the recieved Places-Object as
 the Google-Places-Service described [here](https://developers.google.com/maps/documentation/javascript/reference#AutocompleteOptions). 
 Additionally, you can pass the following, directive-specific options:
 
-* **updateModel** - Set this to true if you want the directive to always update the ngModel and textbox with the found results. (e.g. typed in "Wash" will become "Washington, USA")
+* **updateModel** - Set this to true if you want the directive to always update the ngModel and textboxes input value with the found results full address. (e.g. typed in "Wash" will become "Washington, USA")
 * **watchOptions** - Set this to true if you want your options-object being watched for changes. Else they will only be set once. Be aware that every watcher can slow down the performance of your app.
 
 **paTrigger** (optional) - If you pass a variable to paTrigger, the directive will assign the function to execute a manual search for the currently
