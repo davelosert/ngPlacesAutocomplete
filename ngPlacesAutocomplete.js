@@ -53,7 +53,8 @@ angular.module('ngPlacesAutocomplete', [])
 				 * On place_changed event either send the result if any, or execute a manual-search
 				 */
 				google.maps.event.addListener(autocomplete, 'place_changed', function () {
-					var result = autocomplete.getPlace();
+                    element[0].blur();
+                    var result = autocomplete.getPlace();
 					if (result.address_components) {
 						scope.$apply(function () {
 							// An empty search just returns an object with on property "name" which contains the used query:
@@ -79,7 +80,8 @@ angular.module('ngPlacesAutocomplete', [])
 				 * (https://github.com/wpalahnuk/ngAutocomplete)
 				 */
 				var manualSearch = function () {
-					if (!ngModel.$viewValue) {
+                    element[0].blur();
+                    if (!ngModel.$viewValue) {
 						scope.paOnPlaceReady(null);
 					}
 					// Create the query object by using the viewValue
