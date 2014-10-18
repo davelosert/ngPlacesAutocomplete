@@ -5,9 +5,14 @@ A simple Directive to easily add the autocomplete feature of the Google Places S
 Feel free to contribute or leave an issue here on Github if you are missing functionality or want to report
 a bug.
 
-####Current Version: 1.2.0
+####Current Version: 1.2.1
 
 ### News
+**18 Oct 2014:**
+I discovered a weird behaviour with the Model-Update: Due to the focus on the text element after executing a search, the
+model somehow didnt adjust properly and would go back to the actual search string (instead of the found place) after blurring.
+I fixed this by just manually blurrying the textfield after a search execution. 
+
 **12 Oct 2014:**
 I now implemented a way to synchronize the text-input with the returned result after a search. I made it configurable
 by extending the `paOptions`-Object with the property `updateModel`. Additionally, i made the watcher for the options
