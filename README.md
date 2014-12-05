@@ -5,9 +5,13 @@ A simple Directive to easily add the autocomplete feature of the Google Places S
 Feel free to contribute or leave an issue here on Github if you are missing functionality or want to report
 a bug.
 
-####Current Version: 1.2.1
+####Current Version: 1.2.2
 
 ### News
+**05 Dec 2014:**
+I implemented another option "prevenSubmit" which will check the input-searchfield for a search-execution with "enter". This prevents
+a search being fired twice if the input-searchfield is embedded within a form-element with a input-type "submit".
+
 **18 Oct 2014:**
 I discovered a weird behaviour with the Model-Update: Due to the focus on the text element after executing a search, the
 model somehow didnt adjust properly and would go back to the actual search string (instead of the found place) after blurring.

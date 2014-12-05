@@ -1,5 +1,5 @@
 {
-	"version"         : "1.2.1",
+	"version"         : "1.2.2",
 	"name"            : "ng-places-autocomplete",
 	"description"     : "A Directive to easily add the autocomplete feature of the Google Places Service to a textbox.",
 	"main"            : "ngPlacesAutocomplete.js",
