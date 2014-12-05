@@ -6,6 +6,7 @@
 </head>
 <body ng-app="exampleApp">
 <div ng-controller="exampleController">
+	<form>
 	<input type="text"
 		   ng-places-autocomplete
 		   ng-model="query"
@@ -13,7 +14,8 @@
 		   pa-on-place-ready="placesCallback"
 		   pa-trigger="paTrigger"
 			/>
-		<button ng-click="paTrigger()">Send</button>
+		<button ng-click="paTrigger()" type="submit">Send</button>
+	</form>
 	<div>
 		<h1>Details: </h1>
 
