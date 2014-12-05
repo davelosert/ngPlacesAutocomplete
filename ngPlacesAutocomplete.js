@@ -160,7 +160,6 @@ angular.module('ngPlacesAutocomplete', [])
                         if (scope.paOptions.preventSubmit) {
                             element.on('keydown', function (e) {
                                 if (e.keyCode == 13) {
-                                    if(angular.element('.pac-container'))
                                     e.preventDefault();
                                 }
                             });
