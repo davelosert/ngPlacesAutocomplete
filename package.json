@@ -11,10 +11,10 @@
 	},
 	"author"          : "David Losert (david.losert@gmx.de)",
 	"license"         : "MIT",
-	"homepage"        : "https://github.com/Charminbear/ngPlacesAutocomplete",
+	"homepage"        : "https://github.com/davelosert/ngPlacesAutocomplete",
 	"repository"      : {
 		"type" : "git",
-		"url"  : "https://github.com/Charminbear/ngPlacesAutocomplete.git"
+		"url"  : "https://github.com/davelosert/ngPlacesAutocomplete.git"
 	},
 	"devDependencies" : {
 		"grunt"                 : "^0.4.5",
